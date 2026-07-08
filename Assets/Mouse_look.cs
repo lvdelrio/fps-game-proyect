@@ -1,4 +1,4 @@
-using System.Collections;
+/* using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -88,4 +88,67 @@ public class Mouse_look : MonoBehaviour
         }
     }
         
+}
+ */
+using System.Collections;
+using System.Collections.Generic;
+using Fusion;
+using UnityEngine;
+
+public class PlayerInputHandler : NetworkBehaviour, INetworkRunnerCallbacks
+{
+    private Vector2 _accumulatedLook;
+
+    public override void Spawned()
+    {
+        Runner.AddCallbacks(this);
+    }
+
+    public override void Despawned(NetworkRunner runner, bool hasState)
+    {
+        runner.RemoveCallbacks(this);
+    }
+
+    void Update()
+    {
+        if (!HasInputAuthority) return; // solo el dueño de este jugador lee su mouse
+
+        // Igual que tu GetAxisRaw original, pero acumulado por si el
+        // FixedUpdateNetwork no corre cada frame de Update
+        _accumulatedLook += new Vector2(
+            Input.GetAxisRaw("Mouse X"),
+            Input.GetAxisRaw("Mouse Y")
+        );
+    }
+
+    public void OnInput(NetworkRunner runner, NetworkInput input)
+    {
+        var data = new GameplayInput
+        {
+            LookDelta = _accumulatedLook
+        };
+        input.Set(data);
+        _accumulatedLook = Vector2.zero; // reset después de enviarlo
+    }
+
+    // El resto de los métodos de INetworkRunnerCallbacks los dejas vacíos
+    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player) { }
+    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player) { }
+    public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
+    public void OnShutdown(NetworkRunner runner, ShutdownReason reason) { }
+    public void OnConnectedToServer(NetworkRunner runner) { }
+    public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason) { }
+    public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token) { }
+    public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player) { }
+    public void OnObjectEnterAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player) { }
+    public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason) { }
+    public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason) { }
+    public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message) { }
+    public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList) { }
+    public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data) { }
+    public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken) { }
+public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ReliableKey key, ArraySegment<byte> data) { }
+public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress) { }
+public void OnSceneLoadDone(NetworkRunner runner) { }
+public void OnSceneLoadStart(NetworkRunner runner) { }
 }

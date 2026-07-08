@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.photonengine.fusion-physics": "https://github.com/Photon-Server/Photon-UPM.git#fusion/v2/fusion-physics",
     "com.unity.collab-proxy": "2.12.4",
     "com.unity.feature.development": "1.0.1",
     "com.unity.nuget.mono-cecil": "1.10.2",
