@@ -94,10 +94,14 @@ using System.Collections;
 using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
+using Photon.Realtime;
+using Fusion.Sockets;
+using System;
 
 public class PlayerInputHandler : NetworkBehaviour, INetworkRunnerCallbacks
 {
     private Vector2 _accumulatedLook;
+    
 
     public override void Spawned()
     {
@@ -131,24 +135,89 @@ public class PlayerInputHandler : NetworkBehaviour, INetworkRunnerCallbacks
         _accumulatedLook = Vector2.zero; // reset después de enviarlo
     }
 
-    // El resto de los métodos de INetworkRunnerCallbacks los dejas vacíos
-    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player) { }
-    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player) { }
-    public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
-    public void OnShutdown(NetworkRunner runner, ShutdownReason reason) { }
-    public void OnConnectedToServer(NetworkRunner runner) { }
-    public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason) { }
-    public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token) { }
-    public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player) { }
-    public void OnObjectEnterAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player) { }
-    public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason) { }
-    public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason) { }
-    public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message) { }
-    public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList) { }
-    public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data) { }
-    public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken) { }
-public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ReliableKey key, ArraySegment<byte> data) { }
-public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress) { }
-public void OnSceneLoadDone(NetworkRunner runner) { }
-public void OnSceneLoadStart(NetworkRunner runner) { }
+
+    public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ReliableKey key, ReadOnlySpan<byte> data)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnObjectEnterAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnConnectedToServer(NetworkRunner runner)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnSceneLoadDone(NetworkRunner runner)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnSceneLoadStart(NetworkRunner runner)
+    {
+        throw new NotImplementedException();
+    }
 }
